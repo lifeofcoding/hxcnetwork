@@ -1,0 +1,133 @@
+.downloadBtn {
+	color: blue;
+}
+
+.title {
+	color: #aabdbb;
+  font-weight: 600;
+}
+
+
+.customModal {
+	background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.upload-page {
+  --bg-color: #4DB6AC;
+  --accent-color: #009688;
+}
+
+.upload-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-color);
+  font-family: 'Roboto',-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+}
+
+.empty-message {
+  margin-top: 30px;
+  font-family: monospace;
+  font-weight: 500;
+  text-align: center;
+  color: #AAA;
+}
+.fileinput { 
+  display: none 
+}
+.uploader {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 460px;
+  min-height: 200px;
+  background: #EFEFEF;
+  border-radius: 2px;
+  box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.3);
+  
+  header, footer, article {
+    height: 60px;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: solid 1px rgba(0,0,0,0.08);
+    h3 {
+      font-weight: 500;
+      color: #777;
+    }
+    button {
+      border: none;
+      border-radius: 2px;
+      color: #fff;
+      background-color: var(--accent-color);
+      height: 40px;
+      padding: 0 25px;
+    }
+  }
+  section {
+    flex: 1;
+  }
+  footer {
+    background: var(--accent-color);
+    padding: 0 20px;
+    
+    h5 {
+      color: #fff;
+      margin: 5px 0;
+      font-weight: 500;
+    }
+    .progress-general {
+      height: 5px;
+      width: 100%;
+      background: rgba(255,255,255,.3);
+      margin-top: 15px
+    }
+    .info {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  article {
+    position: relative;
+    display:flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: solid 1px rgba(0,0,0,.12);
+    overflow:hidden;
+    
+    img { vertical-align: middle; }
+    h5 {
+      font-weight: 500;
+      color: #777;
+      z-index: 1;
+    }
+    h3 {
+      margin: 0;
+      position: absolute;
+      right: 20px;
+      bottom: 0px;
+      color: rgba(0,0,0,.08);
+      font-size: 3em;
+      font-weight: 500;
+      z-index: 1;
+      small { font-size: .6em }
+    }
+  }
+}
+
+.progress-file {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  > div {
+    height: 100%;
+    background: #DDD;
+    transition: all .9s ease;
+  }
+}

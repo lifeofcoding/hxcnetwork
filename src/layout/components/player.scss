@@ -1,0 +1,41 @@
+.player {
+    width: 100% !important;
+    background: #2daeb159 !important;
+    padding: 0 10px 0 10px !important;
+
+    .mejs__broadcast {
+      display: none !important;
+    }
+}
+
+.trackTitle {
+  position: absolute;
+  color: #ffffff;
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  padding: 12px;
+  font-family: Montserrat;
+  text-shadow: 1px 1px 2px #000000;
+}
+
+.hide {
+	display: none !important;
+}
+
+.playerBar {
+		z-index: 9999;
+		width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+    transition: all 600ms;
+    position: fixed;
+    background-color: #00000060;
+    bottom: 0px;
+    height: 40px;
+    box-shadow: inset 0px 5px 16px 14px #385ccc;
+    background: url(https://i.ibb.co/txfwSqG/Huawei-Honor-Magic-21974.jpg);
+    background-position: center;
+    background-size: cover;
+}

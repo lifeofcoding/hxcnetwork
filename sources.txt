@@ -1,0 +1,10 @@
+https://www.proxy-list.download/SOCKS5
+https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks.txt
+https://www.my-proxy.com/free-socks-5-proxy.html
+https://github.com/TheSpeedX/SOCKS-List/blob/master/socks.txt
+https://proxy-daily.com/
+https://sockslist.net/list/proxy-socks-5-list/
+http://www.gatherproxy.com/sockslist
+https://www.socks-proxy.net/
+https://hidemyna.me/en/proxy-list/
+http://spys.one/en/socks-proxy-list/

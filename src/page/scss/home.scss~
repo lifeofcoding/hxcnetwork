@@ -1,0 +1,9 @@
+.downloadBtn {
+	color: blue;
+}
+
+.title {
+	color: #aabdbb;
+  font-weight: 600;
+}
+

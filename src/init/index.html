@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+        <meta
+            name="google-signin-client_id"
+            content="905191758617-g2a12go7e1ss4ug8upp4qgqqpb1906q9.apps.googleusercontent.com"
+        />
+
+        <title>HXCNetwork.com</title>
+
+		<script src="https://cdn.ravenjs.com/3.26.4/raven.min.js" crossorigin="anonymous"></script>
+
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+
+        <link
+            href="https://fonts.googleapis.com/css?family=Montserrat"
+            rel="stylesheet"
+        />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"
+            integrity="sha256-HtCCUh9Hkh//8U1OwcbD8epVEUdBvuI8wj1KtqMhNkI="
+            crossorigin="anonymous"
+        />
+
+        <!-- Latest compiled and minified CSS -->
+        <link
+            rel="stylesheet"
+            href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+            media="all"
+        />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"
+            media="all"
+            rel="stylesheet"
+        />
+
+        <script src="/socket.io/socket.io.js"></script>
+
+        <!-- Auth0Lock script -->
+        <script src="https://cdn.auth0.com/js/lock-9.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/mediaelement-and-player.min.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/mediaelementplayer.min.css"
+        />
+
+        <style>
+            .modal {
+                animation: vanishIn;
+                -webkit-animation-duration: 1s;
+                -webkit-animation-fill-mode: both;
+                animation-duration: 1s;
+                animation-fill-mode: both;
+            }
+
+            .modal-content {
+                background-color: rgba(25, 120, 142, 0.6) !important;
+            }
+
+            .al-sidebar {
+                width: 45px !important;
+            }
+
+            .al-sidebar:hover {
+                width: 20vw !important;
+            }
+
+            .al-main {
+                margin-left: 35px !important;
+            }
+
+            .vanishIn {
+                -webkit-animation-name: vanishIn;
+                animation-name: vanishIn;
+            }
+
+            @-webkit-keyframes vanishIn {
+                0% {
+                    opacity: 0;
+                    -webkit-transform-origin: 50% 50%;
+                    transform-origin: 50% 50%;
+                    -webkit-transform: scale(2, 2);
+                    transform: scale(2, 2);
+                    -webkit-filter: blur(90px);
+                    filter: blur(90px);
+                }
+                100% {
+                    opacity: 1;
+                    -webkit-transform-origin: 50% 50%;
+                    transform-origin: 50% 50%;
+                    -webkit-transform: scale(1, 1);
+                    transform: scale(1, 1);
+                    -webkit-filter: blur(0px);
+                    filter: blur(0px);
+                }
+            }
+
+            @keyframes vanishIn {
+                0% {
+                    opacity: 0;
+                    -webkit-transform-origin: 50% 50%;
+                    transform-origin: 50% 50%;
+                    -webkit-transform: scale(2, 2);
+                    transform: scale(2, 2);
+                    -webkit-filter: blur(90px);
+                    filter: blur(90px);
+                }
+                100% {
+                    opacity: 1;
+                    -webkit-transform-origin: 50% 50%;
+                    transform-origin: 50% 50%;
+                    -webkit-transform: scale(1, 1);
+                    transform: scale(1, 1);
+                    -webkit-filter: blur(0px);
+                    filter: blur(0px);
+                }
+            }
+
+            .focused input {
+                outline: 0;
+                border: 1px solid #138698;
+                height: 38px;
+                border-radius: 5px;
+            }
+
+            body a {
+                text-shadow: 1px 1px 3px #000;
+                font-weight: 400;
+                color: #f1f1f1;
+            }
+
+            .mejs__broadcast {
+            	display: none !important;
+            }
+
+            .flex-container {
+                display: flex;
+                justify-content: center;
+            }
+        </style>
+        <style>iframe{width:100%}</style>
+    </head>
+    <body class="badmin-transparent">
+        <div
+            id="react-app"
+            class="page-md page-header-fixed page-sidebar-closed-hide-logo page-sidebar-fixed">
+            <div
+                class="preloader"
+                style="background: rgba(0, 0, 0, 0.5) !important;">
+                <div></div>
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+        	function init() {
+        		gapi.load('auth2', function() {
+              console.log('triggering google-loaded')
+        			window.dispatchEvent(new Event('google-loaded'));
+        		});
+					}
+
+          document.addEventListener("DOMContentLoaded", function(event) {
+            var socket = window.socket = io();
+            socket.on('connected', function(msg){
+              console.log('Connected...');
+            });
+          });
+				</script>
+
+        <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    </body>
+</html>

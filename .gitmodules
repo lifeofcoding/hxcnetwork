@@ -1,0 +1,12 @@
+[submodule "proxyfarm"]
+	path = proxyfarm
+	url = https://github.com/clemmy/proxyfarm.git
+[submodule "proxy-verify"]
+	path = proxy-verify
+	url = https://github.com/lifeofcoding/proxy-verify.git
+[submodule "node-cpulimit"]
+	path = node-cpulimit
+	url = https://github.com/vangelov/node-cpulimit.git
+[submodule "ProxyBroker"]
+        path = ProxyBroker
+        url = https://github.com/lifeofcoding/ProxyBroker.git
