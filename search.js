@@ -23,7 +23,7 @@ const SpotifyWebApi = require('spotify-web-api-node');
 
 const PORT = process.env.PORT || 3000;
 
-const songSearch = require(path.resolve('/app/song-search/main'));
+const songSearch = require(path.resolve('./search/main'));
 const youtubeAPIKey = 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ';
 
 const spotifyApi = new SpotifyWebApi({
