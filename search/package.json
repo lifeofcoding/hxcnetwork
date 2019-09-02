@@ -13,8 +13,8 @@
     "test": "node testdriver.js 'Swift'"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/benkaiser/song-search.git"
+    "type": "git",
+    "url": "https://github.com/benkaiser/song-search.git"
   },
   "author": "Benjamin Kaiser",
   "license": "MIT"

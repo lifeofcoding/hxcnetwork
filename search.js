@@ -121,16 +121,7 @@ client.connect(function(err) {
   });
 
   router.get('/download/:videoId', function(req, res) {
-    axios.get(`/get/${req.params.videoId}`).then(ress => {
-      let vid = ress.data.items[0];
-      res.setHeader(
-        'content-disposition',
-        'attachment; filename=' +
-          _.replace(vid.snippet.title, ' ', '_') +
-          '.mp3'
-      );
-      request(`/${req.params.videoId}`).pipe(res);
-    });
+    request(`https://jewtube.herokuapp.com/${req.params.videoId}`).pipe(res);
   });
 
   router.get('/artists/:terms', (req, res) => {
