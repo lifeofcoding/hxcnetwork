@@ -192,32 +192,29 @@ client.connect(function(err) {
       limit: 50,
     });
 
-        let tracks = data.tracks.items;
-        let filteredResponse = [];
+    let tracks = data.tracks.items;
+    let filteredResponse = [];
 
-        tracks.forEach ((track) => {
-            console.log(track);
-            const filteredTrack = {
-                album: {
-                    name: track.album.name,
-                    uri: track.album.uri,
-                    image: track.album.images[0].url
-                },
-                artist: track.artists.map (x => x.name)[0],
-                duration: track.duration_ms,
-                uri: track.uri,
-                popularity: track.popularity,
-                track: track.name,
-                url: `/api/query/${track.artists.map (x => x.name)[0]} - ${track.name}`
-            };
-            filteredResponse.push (filteredTrack);
-        });
-
-        res.json(filteredResponse);
+    tracks.forEach(track => {
+      console.log(track);
+      const filteredTrack = {
+        album: {
+          name: track.album.name,
+          uri: track.album.uri,
+          image: track.album.images[0].url,
+        },
+        artist: track.artists.map(x => x.name)[0],
+        duration: track.duration_ms,
+        uri: track.uri,
+        popularity: track.popularity,
+        track: track.name,
+        url: `/api/query/${track.artists.map(x => x.name)[0]} - ${track.name}`,
+      };
+      filteredResponse.push(filteredTrack);
     });
-});
 
-
+    res.json(filteredResponse);
+  });
 
   router.get('/query/:term', (req, res) => {
     let {term} = req.params;
@@ -385,11 +382,6 @@ client.connect(function(err) {
           socket.emit('scrapeOutput', '' + data);
         });
     });
-
-    //       shell.exec('screen -r', {async:true}).stdout.on('data', function(data) {
-    //         //console.log('' + data);
-    //         socket.emit('output', '' + data);
-    //       });
   });
 
   server.listen(PORT, function() {
