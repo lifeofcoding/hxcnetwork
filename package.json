@@ -7,7 +7,7 @@
     "clean": "rimraf dist",
     "build:webpack": "NODE_ENV=production webpack --config webpack.config.prod.js",
     "build": "npm run clean && npm run build:webpack",
-    "start": "node server.js",
+    "start": "node search.js",
     "dev": "node dev-server.js",
     "lint": "node_modules/.bin/eslint --ext .js .",
     "test": "NODE_ENV=test NODE_PATH=. ./node_modules/.bin/mocha test/setup.js test --recursive",
