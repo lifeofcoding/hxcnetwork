@@ -102,16 +102,16 @@ export class Home extends React.Component {
   	this.setState({
   		modal: {
   			show: true,
-  			title: result.artist.name +' - '+ result.name,
-  			url: result.url,
-  			image: result.album.image.url,
-  			duration: result.duration
+  			title: result.artist +' - '+ result.title,
+  			videoId: result.youtubeId,
+  			image: result.coverUrl,
+  			album: result.album
   		}
   	})
   }
 
   downloadVideo() {
-  	var url = `/api/query/${this.state.modal.title}`;
+  	var url = `/api/download/${this.state.modal.videoId}`;
   	this.setState({
   		modal: {
   			show: false
@@ -127,7 +127,7 @@ export class Home extends React.Component {
 
     let song = {
     	title: result.artist.name + ' - ' + result.name,
-    	url: result.url
+      url: '/api/download' + result.youtubeId
     }
     eventBus.playSong(song)
   }
@@ -149,13 +149,13 @@ export class Home extends React.Component {
                 results.map((result, idx) => {
                   return (
                      <TableRow key={idx}>
-                      <td><img src={result.album.image} width="220px" height="auto"/></td>
+                      <td><img src={result.coverUrl} width="220px" height="auto"/></td>
                       <td>
                       	<Row>
 													<Col>
-														<a href={`#${result.artist.name} - ${result.name}`} className={styles.title} onClick={(e)=>this.play(e, result)}>{result.artist.name} {result.name}</a>
+														<a href={`#${result.artist} - ${result.title}`} className={styles.title} onClick={(e)=>this.play(e, result)}>{result.artist} {result.title}</a>
 
-														<p><small>Duration: {millisToMinutesAndSeconds(result.duration)}</small></p>
+                            <p><small>Album: {result.album}</small></p>
 													</Col>
 												</Row>
                       </td>
@@ -173,7 +173,7 @@ export class Home extends React.Component {
               <img src={this.state.modal.image} />
             </Col>
             <Col>
-            	<small>{this.state.modal.duration}</small>
+            	<small>{this.state.modal.album}</small>
             </Col>
           </Row>
         </Modal>

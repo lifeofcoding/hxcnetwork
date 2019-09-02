@@ -229,19 +229,6 @@ spotifyModule.search(q, opts, {
 });
 */
 
-
-var songSearch = require('./song-search/main.js');
-
-songSearch.search({
-  search: req.params.search,
-  limit: 50, // defaults to 50
-  itunesCountry: 'us', // defaults to 'us'
-  youtubeAPIKey: 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ',
-}, function(err, songs) {
-  console.log(songs); // will print out the 50 most
-    res.json(songs);
-});
-/*
     spotify.search({type: 'track', query: req.params.search}, function(
       err,
       data
@@ -270,12 +257,12 @@ songSearch.search({
                 track: track.name,
                 url: `/api/query/${track.artists.map (x => x.name)[0]} - ${track.name}`
             };
+
             filteredResponse.push (filteredTrack);
         });
 
         res.json(filteredResponse);
     });
-*/
 
     /*
     client.search(params, function(err, result) {
@@ -322,19 +309,17 @@ songSearch.search({
     */
   });
   router.get('/query/:term', (req, res) => {
-    let { term } = req.params;
+    let { term } = req.query;
     console.log(`Querying for '${req.params.term}'...`);
-var songSearch = require('./song-search/main.js');
-
-songSearch.search({
-  search: term,
-  limit: 50, // defaults to 50
-  itunesCountry: 'us', // defaults to 'us'
-  youtubeAPIKey: 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ',
-}, function(err, songs) {
-  console.log(songs); // will print out the 50 most
+const matcher = require('youtube-song-matcher')({ key: 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ' });
+matcher.getSongMatches({
+  artist: term.split(' - ')[0],
+  title: term.split(' - ')[1],
+  duration: ''
+}).then((results) => {
+  console.log(results)
   // res.send(results);
-      let vid = songs.items[0];
+      let vid = results.data.items[0];
       res.setHeader(
         'content-disposition',
         'attachment; filename=' +

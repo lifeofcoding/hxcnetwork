@@ -54,7 +54,8 @@
     "socket.io": "^2.2.0",
     "spotifier": "^0.4.0",
     "spotify-web-api-node": "^4.0.0",
-    "vhost": "^3.0.2"
+    "vhost": "^3.0.2",
+    "youtube-song-matcher": "^0.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.7.4",

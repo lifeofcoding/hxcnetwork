@@ -10,3 +10,9 @@
 [submodule "ProxyBroker"]
         path = ProxyBroker
         url = https://github.com/lifeofcoding/ProxyBroker.git
+[submodule "song-matcher"]
+	path = song-matcher
+	url = https://github.com/briankeane/youtube-song-matcher.git
+[submodule "song-search"]
+	path = song-search
+	url = https://github.com/benkaiser/song-search.git
