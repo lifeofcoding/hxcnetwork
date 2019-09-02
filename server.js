@@ -154,6 +154,7 @@ client.connect(function(err) {
     }
   });
 
+
   var getArtist = (req, res) => {
     return new Promise(function(resolve, reject) {
       let artists = [];
@@ -239,10 +240,27 @@ spotifyModule.search(q, opts, {
       itunesCountry: 'us', // defaults to 'us'
       youtubeAPIKey: 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ',
     }, function(err, songs) {
-      console.log(songs); // will print out the 50 most
-        res.json(songs);
-    });
-/*
+
+songSearch.search({
+  search: 'Taylor Swift',
+  limit: 50, // defaults to 50
+  itunesCountry: 'us', // defaults to 'us'
+  youtubeAPIKey: 'YOUR_YOUTUBE_KEY_HERE',
+}, function(err, songs) {
+  console.log(songs); // will print out the 50 most
+    /*
+      [{ title: 'Shake It Off',
+        artist: 'Taylor Swift',
+        album: '1989',
+        discNumber: 1,
+        trackNumber: 6,
+        genre: 'Pop',
+        coverUrl: 'http://is2.mzstatic.com/image/thumb/Music5/v4/29/fa/b6/29fab67f-c950-826f-26a0-5eebcd0e262b/source/600x600bb.jpg',
+        youtubeId: 'nfWlot6h_JM' },
+          console.log(songs); // will print out the 50 most
+            res.json(songs);
+        });
+        /*
     spotify.search({type: 'track', query: req.params.search}, function(
       err,
       data
