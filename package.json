@@ -55,6 +55,7 @@
     "spotifier": "^0.4.0",
     "spotify-web-api-node": "^4.0.0",
     "vhost": "^3.0.2",
+    "youtube-node": "1.3.3",
     "youtube-song-matcher": "^0.1.0"
   },
   "devDependencies": {
