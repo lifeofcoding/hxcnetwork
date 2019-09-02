@@ -20,6 +20,7 @@ var stream = require('stream');
 var upload = require('./upload');
 const cheerio = require('cheerio');
 const Spotify = require('node-spotify-api');
+var path = require('path');
 const server = http.createServer(app);
 
 const PORT = process.env.PORT || 3000;
@@ -230,7 +231,7 @@ spotifyModule.search(q, opts, {
 */
 
 
-    var songSearch = require('./song-search/main.js');
+    var songSearch = require(path.resolve('/song-search/main.js'));
     
     songSearch.search({
       search: req.params.search,
