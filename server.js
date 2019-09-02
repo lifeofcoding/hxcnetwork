@@ -117,34 +117,33 @@ client.connect(function(err) {
   app.use('/api', router);
   //app.use("/spotify",spotifyRoute);
 
-  /*
-  spotifyRoute.get('/search/:terms', (req, res) => {
-    console.log('search spotifyRoute');
-    let artists = [];
-    let artistId = '';
-    let artistData = '';
-    spotifyApi
-      .searchArtists(req.params.terms)
-      .then(function(data) {
-        //console.log('Search artists ' + req.params.terms, data.body);
-        artists = data.body.artists;
-        //console.log(JSON.stringify(artists));
-        //console.log(artists.items[0])
-        artistId = artists.items[0].id;
-        console.log('grabbing data for id' + artistId);
-        return spotifyApi.getArtist(artistId);
-      })
-      .then(function(data) {
-        artistData = data;
-        return spotifyApi.getArtistRelatedArtists(artistId);
-      })
-      .then(function(data) {
-        //console.log(data)
-        artistData.related = data.body.artists;
-        res.json(artistData);
-      });
-  });
-  */
+//   spotifyRoute.get('/search/:terms', (req, res) => {
+//     console.log('search spotifyRoute');
+//     let artists = [];
+//     let artistId = '';
+//     let artistData = '';
+//     spotifyApi
+//       .searchArtists(req.params.terms)
+//       .then(function(data) {
+//         //console.log('Search artists ' + req.params.terms, data.body);
+//         artists = data.body.artists;
+//         //console.log(JSON.stringify(artists));
+//         //console.log(artists.items[0])
+//         artistId = artists.items[0].id;
+//         console.log('grabbing data for id' + artistId);
+//         return spotifyApi.getArtist(artistId);
+//       })
+//       .then(function(data) {
+//         artistData = data;
+//         return spotifyApi.getArtistRelatedArtists(artistId);
+//       })
+//       .then(function(data) {
+//         //console.log(data)
+//         artistData.related = data.body.artists;
+//         res.json(artistData);
+//       });
+//   });
+
   app.all('*', function(req, res) {
     if (isHeroku) {
       res.sendFile(path.join(appDir, 'index.html'));
@@ -186,65 +185,168 @@ client.connect(function(err) {
     console.log('search spotifier for ', req.params.search);
 
     let results = [];
+    /*
+    var client = spotifier({
+      albumUrl: 'https://api.spotify.com/v1/albums',
+      authorizationUrl: 'https://accounts.spotify.com/api/token',
+      clientId: '2dc9424b5b0941f98e93d79db282c8ff',
+      clientSecret: 'fc511781fcf14cf8af2f26423c14cd9b',
+      searchResultLimit: 30,
+      searchUrl: 'https://api.spotify.com/v1/search',
+      timeout: 10000,
+    });
+    */
+
     var spotify = new Spotify({
       id: '2dc9424b5b0941f98e93d79db282c8ff',
       secret: 'fc511781fcf14cf8af2f26423c14cd9b',
-      limit: 50,
+      limit: 50
     });
+/*
+var SpotifyModule = require('spotify-middleware-webapi');
+var spotifyModule = new SpotifyModule({
+  "credentials": {
+    "clientId": "[clientId]",
+    "clientSecret": "[clientSecret]",
+    "redirect_uri": "http://localhost:3000/auth/callback"
+  }
+});
 
-    let tracks = data.tracks.items;
-    let filteredResponse = [];
+var q = req.params.search;
+var opts = {
+  limit: 20,
+  offset: 0,
+  market: 'US',
+  type: ['album', 'artist', 'track', 'playlist']
+};
 
-    tracks.forEach(track => {
-      console.log(track);
-      const filteredTrack = {
-        album: {
-          name: track.album.name,
-          uri: track.album.uri,
-          image: track.album.images[0].url,
-        },
-        artist: track.artists.map(x => x.name)[0],
-        duration: track.duration_ms,
-        uri: track.uri,
-        popularity: track.popularity,
-        track: track.name,
-        url: `/api/query/${track.artists.map(x => x.name)[0]} - ${track.name}`,
-      };
-      filteredResponse.push(filteredTrack);
-    });
+spotifyModule.search(q, opts, {
+  accessToken: accessToken,
+  refreshToken: refreshToken
+}, function(err, results, accessToken) {
+  console.log(results);
+  res.json(results);
+});
+*/
 
-    res.json(filteredResponse);
-  });
 
-  router.get('/query/:term', (req, res) => {
-    let {term} = req.params;
-    console.log(`Querying for '${req.params.term}'...`);
     var songSearch = require('./song-search/main.js');
-
-    songSearch.search(
-      {
-        search: term,
-        limit: 50, // defaults to 50
-        itunesCountry: 'us', // defaults to 'us'
-        youtubeAPIKey: 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ',
-      },
-      function(err, songs) {
-        console.log(songs); // will print out the 50 most
-        // res.send(results);
-        let vid = songs.items[0];
-        res.setHeader(
-          'content-disposition',
-          'attachment; filename=' +
-            _.replace(vid.snippet.title, ' ', '_') +
-            '.mp3'
-        );
-        request(`/${req.params.videoId}`).pipe(res);
+    
+    songSearch.search({
+      search: req.params.search,
+      limit: 50, // defaults to 50
+      itunesCountry: 'us', // defaults to 'us'
+      youtubeAPIKey: 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ',
+    }, function(err, songs) {
+      console.log(songs); // will print out the 50 most
+        res.json(songs);
+    });
+/*
+    spotify.search({type: 'track', query: req.params.search}, function(
+      err,
+      data
+    ) {
+      if (err) {
+        return console.log('Error occurred: ' + err);
       }
+        //console.log(data);
+
+
+        let tracks = data.tracks.items;
+        let filteredResponse = [];
+
+        tracks.forEach ((track) => {
+            console.log(track);
+            const filteredTrack = {
+                album: {
+                    name: track.album.name,
+                    uri: track.album.uri,
+                    image: track.album.images[0].url
+                },
+                artist: track.artists.map (x => x.name)[0],
+                duration: track.duration_ms,
+                uri: track.uri,
+                popularity: track.popularity,
+                track: track.name,
+                url: `/api/query/${track.artists.map (x => x.name)[0]} - ${track.name}`
+            };
+            filteredResponse.push (filteredTrack);
+        });
+
+        res.json(filteredResponse);
+    });
+*/
+
+    /*
+    client.search(params, function(err, result) {
+      // work with results here...
+  //res.json(result);
+  if (err) console.log(err)
+      res.json({results: result});
+    });
+    */
+    /*
+    request(`http://127.0.0.1:8011/${req.url}`).pipe(res);
+    //https://api.spotify.com/v1/search
+    spotifyApi
+      .searchTracks(req.params.search)
+      .then(function(data) {
+        console.log('I got ' + data.body.tracks.total + ' results!');
+
+        var firstPage = data.body.tracks.items;
+        console.log(
+          'The tracks in the first page are.. (popularity in parentheses)'
+        );
+
+        results = [];
+        firstPage.forEach(function(track, index) {
+          track.artist = track.artists[track.arists.length - 1].name;
+
+          console.log(index + ': ' + track.artist + ' ' + track.name + '');
+
+          track.downloadUrl = '/query/' + track.artist + ' - ' + track.name;
+
+          results.push(track);
+        });
+
+        res.json(results);
+      })
+      .catch(function(err) {
+        console.log('Something went wrong:', err.message);
+      });
+      */
+    /*
+     request(`https://jewtube.herokuapp.com/search/${req.params.search}`).pipe(
+      res
     );
+    */
   });
+  router.get('/query/:term', (req, res) => {
+    let { term } = req.params;
+    console.log(`Querying for '${req.params.term}'...`);
+var songSearch = require('./song-search/main.js');
+
+songSearch.search({
+  search: term,
+  limit: 50, // defaults to 50
+  itunesCountry: 'us', // defaults to 'us'
+  youtubeAPIKey: 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ',
+}, function(err, songs) {
+  console.log(songs); // will print out the 50 most
+  // res.send(results);
+      let vid = songs.items[0];
+      res.setHeader(
+        'content-disposition',
+        'attachment; filename=' +
+          _.replace(vid.snippet.title, ' ', '_') +
+          '.mp3'
+      );
+      request(`/${req.params.videoId}`).pipe(res);
+})
+});
 
   router.get('/query2/:term', (req, res) => {
-    let {term} = req.query;
+    let { term } = req.query;
     term = decodeURIComponent(term);
     console.log(`Querying for '${req.params.term}'...`);
 
@@ -269,8 +371,8 @@ client.connect(function(err) {
               $(elem)
                 .attr('href')
                 .toString()
-                .indexOf('ad') === -1 &&
-              _.includes($(elem).text(), term)
+                .indexOf('ad') === -1
+                 && _.includes($(elem).text(), term)
             ) {
               videoId = $(elem)
                 .attr('href')
@@ -382,6 +484,11 @@ client.connect(function(err) {
           socket.emit('scrapeOutput', '' + data);
         });
     });
+
+    //       shell.exec('screen -r', {async:true}).stdout.on('data', function(data) {
+    //         //console.log('' + data);
+    //         socket.emit('output', '' + data);
+    //       });
   });
 
   server.listen(PORT, function() {
