@@ -50,6 +50,7 @@
     "react-iframe-resizer-super": "^0.2.2",
     "react-router": "^2.0.1",
     "react-tap-event-plugin": "^0.2.2",
+    "searchitunes": "2.4.0",
     "shelljs": "^0.8.3",
     "socket.io": "^2.2.0",
     "spotifier": "^0.4.0",
