@@ -1,3 +1,5 @@
+const CONCURRENCY = process.env.WEB_CONCURRENCY || 1;
+
 const _ = require('lodash');
 const http = require('http');
 const https = require('https');
@@ -23,7 +25,8 @@ const SpotifyWebApi = require('spotify-web-api-node');
 
 const PORT = process.env.PORT || 3000;
 
-const songSearch = require(path.resolve('./search/main'));
+console.log(require.main);
+const songSearch = require('./search/main');
 const youtubeAPIKey = 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ';
 
 const spotifyApi = new SpotifyWebApi({
