@@ -127,7 +127,7 @@ export class Home extends React.Component {
 
     let song = {
     	title: result.artist.name + ' - ' + result.name,
-      url: '/api/download' + result.youtubeId
+      url: '/api/download/' + result.youtubeId
     }
     eventBus.playSong(song)
   }

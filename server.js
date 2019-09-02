@@ -200,9 +200,9 @@ client.connect(function(err) {
     var spotify = new Spotify({
       id: '2dc9424b5b0941f98e93d79db282c8ff',
       secret: 'fc511781fcf14cf8af2f26423c14cd9b',
-      limit: 50
+      limit: 50,
     });
-/*
+    /*
 var SpotifyModule = require('spotify-middleware-webapi');
 var spotifyModule = new SpotifyModule({
   "credentials": {
@@ -229,19 +229,21 @@ spotifyModule.search(q, opts, {
 });
 */
 
+    var songSearch = require('./song-search/main.js');
 
-var songSearch = require('./song-search/main.js');
-
-songSearch.search({
-  search: req.params.search,
-  limit: 50, // defaults to 50
-  itunesCountry: 'us', // defaults to 'us'
-  youtubeAPIKey: 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ',
-}, function(err, songs) {
-  console.log(songs); // will print out the 50 most
-    res.json(songs);
-});
-/*
+    songSearch.search(
+      {
+        search: req.params.search,
+        limit: 50, // defaults to 50
+        itunesCountry: 'us', // defaults to 'us'
+        youtubeAPIKey: 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ',
+      },
+      function(err, songs) {
+        console.log(songs); // will print out the 50 most
+        res.json(songs);
+      }
+    );
+    /*
     spotify.search({type: 'track', query: req.params.search}, function(
       err,
       data
@@ -322,31 +324,34 @@ songSearch.search({
     */
   });
   router.get('/query/:term', (req, res) => {
-    let { term } = req.params;
+    let {term} = req.params;
     console.log(`Querying for '${req.params.term}'...`);
-var songSearch = require('./song-search/main.js');
+    var songSearch = require('./song-search/main.js');
 
-songSearch.search({
-  search: term,
-  limit: 50, // defaults to 50
-  itunesCountry: 'us', // defaults to 'us'
-  youtubeAPIKey: 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ',
-}, function(err, songs) {
-  console.log(songs); // will print out the 50 most
-  // res.send(results);
-      let vid = songs.items[0];
-      res.setHeader(
-        'content-disposition',
-        'attachment; filename=' +
-          _.replace(vid.snippet.title, ' ', '_') +
-          '.mp3'
-      );
-      request(`/${req.params.videoId}`).pipe(res);
-})
-});
+    songSearch.search(
+      {
+        search: term,
+        limit: 50, // defaults to 50
+        itunesCountry: 'us', // defaults to 'us'
+        youtubeAPIKey: 'AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ',
+      },
+      function(err, songs) {
+        console.log(songs); // will print out the 50 most
+        // res.send(results);
+        let vid = songs.items[0];
+        res.setHeader(
+          'content-disposition',
+          'attachment; filename=' +
+            _.replace(vid.snippet.title, ' ', '_') +
+            '.mp3'
+        );
+        request(`/${req.params.videoId}`).pipe(res);
+      }
+    );
+  });
 
   router.get('/query2/:term', (req, res) => {
-    let { term } = req.query;
+    let {term} = req.query;
     term = decodeURIComponent(term);
     console.log(`Querying for '${req.params.term}'...`);
 
@@ -371,8 +376,8 @@ songSearch.search({
               $(elem)
                 .attr('href')
                 .toString()
-                .indexOf('ad') === -1
-                 && _.includes($(elem).text(), term)
+                .indexOf('ad') === -1 &&
+              _.includes($(elem).text(), term)
             ) {
               videoId = $(elem)
                 .attr('href')
