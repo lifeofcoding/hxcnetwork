@@ -20,7 +20,7 @@ import {ArtistInfo} from '../components/artist-info.js';
 import {Result} from '../components/result-item.js';
 import eventBus from '../lib/event-bus';
 import styles from './scss/home.scss';
-import {unescape} from 'lodash';
+import {unescape, random} from 'lodash';
 
 const decodeEntities = (function() {
   // this prevents any overhead from creating the object each time
@@ -112,8 +112,10 @@ export class Home extends React.Component {
   }
 
   componentWillMount() {
+    let genres = ['indie', 'rock', 'hiphop', 'folk', 'alternative'];
+
     let {params} = this.props;
-    this.getResults(params.terms || 'indie');
+    this.getResults(params.terms || genres[random(0, genres.length)]);
   }
 
   download(result) {
