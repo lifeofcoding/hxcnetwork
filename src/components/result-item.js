@@ -73,7 +73,7 @@ export class Result extends React.Component {
       <Table style={imageIsReady ? style : blur}>
         <TableBody>
           <TableRow ref={el => (this.el = el)}>
-            <td style={{background: 'rgba(0,0,0,0.8)'}}>
+            <td style={{background: 'rgba(0,0,0,0.8)', width: '200px'}}>
               <img src={this.props.result.coverUrl} width="200px" />
             </td>
             <td style={{background: 'rgba(0,0,0,0.8)'}}>

@@ -66,7 +66,7 @@ client.connect(function(err) {
         client.close();
     });
 
-    var child = shell.exec('node ./proxyfarm/proxyfarm.js --in ./proxyfarm/sources.txt', {async:true});
+    var child = shell.exec(`node ${path.resolve(process.cwd(), './proxyfarm/proxyfarm.js')} --in ${path.resolve(process.cwd(), './sources.txt')}`, {async:true});
 
     child.stdout.on('data', function(data) {
         //console.log('' + data);

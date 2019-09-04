@@ -1,28 +1,37 @@
 import _ from 'lodash';
 import React from 'react';
-import { Link } from 'react-router';
-import eventBus from "src/lib/event-bus";
+import {Link} from 'react-router';
+import eventBus from 'src/lib/event-bus';
 
 export class Sidebar extends React.Component {
-
   static propTypes = {
     location: React.PropTypes.shape({
       pathname: React.PropTypes.string.isRequired,
       query: React.PropTypes.object.isRequired,
     }),
-  }
+  };
 
   state = {
     navItems: [
-      { pathname: '/', label: 'Home', icon: 'home' },
-      { pathname: '/proxies', label: 'Proxies', icon: 'proxies', protected: true},
-      { pathname: '/laptop', label: 'Laptop', icon: 'computer', protected: true },
-      { pathname: '/crack', label: 'Crack WPA', icon: 'network', protected: true },
+      {pathname: '/', label: 'Home', icon: 'home'},
+      {
+        pathname: '/proxies',
+        label: 'Proxies',
+        icon: 'proxies',
+        protected: true,
+      },
+      {pathname: '/laptop', label: 'Laptop', icon: 'computer', protected: true},
+      {
+        pathname: '/crack',
+        label: 'Crack WPA',
+        icon: 'network',
+        protected: true,
+      },
     ],
     showHistory: false,
     history: [],
-    userLoggedIn: false
-  }
+    userLoggedIn: false,
+  };
 
   componentWillMount() {
     this.toggleHistory = this.toggleHistory.bind(this);
@@ -33,27 +42,36 @@ export class Sidebar extends React.Component {
   }
 
   componentDidMount() {
-    eventBus.on('user:loggedin', (user) => {
+    eventBus.on('user:loggedin', user => {
       //this.state.navitems.push({ pathname: '/proxies', label: 'Proxies', icon: 'info' });
       this.setState({
-        userLoggedIn: true
-      })
+        userLoggedIn: true,
+      });
     });
 
     eventBus.on('player:play', ({title, url}) => {
-      this.state.history.push({ title, url });
+      this.state.history.push({title, url});
       this.setState({
-        history: this.state.history
-      })
+        history: this.state.history,
+      });
     });
   }
 
   renderLinks() {
-    return _.map(this.state.navItems, (navItem) => {
-      if ((this.state.userLoggedIn && navitems.protected) || !navItem.protected) {
+    return _.map(this.state.navItems, navItem => {
+      if (
+        (this.state.userLoggedIn && navItem.protected) ||
+        !navItem.protected
+      ) {
         return (
-          <li className={`al-sidebar-list-item ${this.isSelected(navItem)}`} key={navItem.pathname}>
-            <Link className="al-sidebar-list-link" to={{ pathname: navItem.pathname, query: navItem.query }}>
+          <li
+            className={`al-sidebar-list-item ${this.isSelected(navItem)}`}
+            key={navItem.pathname}
+          >
+            <Link
+              className="al-sidebar-list-link"
+              to={{pathname: navItem.pathname, query: navItem.query}}
+            >
               <i className={`fa fa-${navItem.icon}`}></i>
               <span>{navItem.label}</span>
             </Link>
@@ -63,11 +81,15 @@ export class Sidebar extends React.Component {
     });
   }
 
- renderHistory() {
+  renderHistory() {
     return _.map(this.state.history, (song, idx) => {
       return (
         <li className={`al-sidebar-list-item`} key={idx}>
-          <a className="al-sidebar-list-link" style={{marginLeft: '-100%', textOverflow: 'ellipsis'}} href="#">
+          <a
+            className="al-sidebar-list-link"
+            style={{marginLeft: '-100%', textOverflow: 'ellipsis'}}
+            href="#"
+          >
             <i className={`fa fa-music`}></i>
             <span>{song.title}</span>
           </a>
@@ -80,8 +102,8 @@ export class Sidebar extends React.Component {
     e.preventDefault();
 
     this.setState({
-      showHistory: !this.state.showHistory
-    })
+      showHistory: !this.state.showHistory,
+    });
   }
 
   render() {
@@ -114,18 +136,36 @@ export class Sidebar extends React.Component {
 
     // ul - slimscroll="{height: '{{menuHeight}}px'}" slimscroll-watch="menuHeight"
     return (
-      <aside className="al-sidebar" ng-swipe-right="menuExpand()" ng-swipe-left="menuCollapse()"
-        ng-mouseleave="hoverElemTop=selectElemTop">
-        <ul className="al-sidebar-list">
-          {this.renderLinks()}
-        </ul>
-        <ul className={'al-sidebar-sublist ' + this.state.showHistory ? 'expanded' : 'slide-right'}>
+      <aside
+        className="al-sidebar"
+        ng-swipe-right="menuExpand()"
+        ng-swipe-left="menuCollapse()"
+        ng-mouseleave="hoverElemTop=selectElemTop"
+      >
+        <ul className="al-sidebar-list">{this.renderLinks()}</ul>
+        <ul
+          className={
+            'al-sidebar-sublist ' + this.state.showHistory
+              ? 'expanded'
+              : 'slide-right'
+          }
+        >
           <li className="with-sub-menu' ">
-            <a href="#" className="al-sidebar-list-link subitem-submenu-link" onClick={this.toggleHistory}>
+            <a
+              href="#"
+              className="al-sidebar-list-link subitem-submenu-link"
+              onClick={this.toggleHistory}
+            >
               <span>History</span>
-
             </a>
-            <ul className={'al-sidebar-sublist subitem-submenu-list ' + this.state.showHistory ? 'expanded' : 'slide-right'}>
+            <ul
+              className={
+                'al-sidebar-sublist subitem-submenu-list ' +
+                this.state.showHistory
+                  ? 'expanded'
+                  : 'slide-right'
+              }
+            >
               {this.renderHistory()}
             </ul>
           </li>
