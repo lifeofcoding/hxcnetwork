@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {
   Page,
   Panel,
@@ -16,6 +17,7 @@ import {Row, Col} from 'react-flex-proto';
 import axios from 'axios';
 import {Loading} from '../components/loading.js';
 import {ArtistInfo} from '../components/artist-info.js';
+import {Result} from '../components/result-item.js';
 import eventBus from '../lib/event-bus';
 import styles from './scss/home.scss';
 import {unescape} from 'lodash';
@@ -45,6 +47,7 @@ export class Home extends React.Component {
     super();
 
     this.state = {
+      loaded: false,
       results: [],
       page: 1,
       modal: {
@@ -57,7 +60,8 @@ export class Home extends React.Component {
 
     this.timer = null;
     this.getResults = this.getResults.bind(this);
-    this.downloadVideo = this.downloadVideo.bind(this);
+
+    this.el = null;
   }
 
   componentDidUpdate(prevProps) {
@@ -110,106 +114,22 @@ export class Home extends React.Component {
     this.getResults(params.terms || 'indie');
   }
 
-  download(result) {
-    this.setState({
-      modal: {
-        show: true,
-        title: result.artist + ' - ' + result.title,
-        videoId: result.youtubeId,
-        image: result.coverUrl,
-        album: result.album,
-      },
-    });
-  }
+  createTable() {
+    let table = [];
 
-  downloadVideo() {
-    var url = `/api/download/${this.state.modal.videoId}`;
-    this.setState({
-      modal: {
-        show: false,
-      },
-    });
-
-    document.location.href = url;
-  }
-
-  play(e, result) {
-    e.preventDefault();
-
-    let song = {
-      title: result.artist + ' - ' + result.title,
-      url: '/api/download/' + result.youtubeId,
-    };
-    eventBus.playSong(song);
+    for (let i = 0, len = this.state.results.length; i < len; i++) {
+      table.push(<Result key={i} result={this.state.results[i]} />);
+    }
+    return table;
   }
 
   render() {
-    if (this.state.loading) {
-      return <Loading />;
-    }
-
-    const results = this.state.results || [];
-    const millisToMinutesAndSeconds = this.millisToMinutesAndSeconds;
     return (
       <Page>
         <Panel className="animated fadeInUp">
           <ArtistInfo history={this.props.history} />
-          <Table>
-            <TableBody>
-              {results.map((result, idx) => {
-                return (
-                  <TableRow key={idx}>
-                    <td>
-                      <img src={result.coverUrl} width="220px" height="auto" />
-                    </td>
-                    <td>
-                      <Row>
-                        <Col>
-                          <a
-                            href={`#${result.artist} - ${result.title}`}
-                            className={styles.title}
-                            onClick={e => this.play(e, result)}
-                          >
-                            {result.artist} - {result.title}
-                          </a>
-
-                          <p>Album: {result.album}</p>
-                          <p>Genre: {result.genre}</p>
-                        </Col>
-                      </Row>
-                    </td>
-                    <td style={{verticalAlign: 'middle'}}>
-                      <Button
-                        type="info"
-                        icon={<i className="fa fa-download" />}
-                        onClick={e => this.download(result)}
-                        title="Download"
-                        size="sm"
-                      />
-                    </td>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+          {this.createTable()}
         </Panel>
-        <Modal
-          type="info"
-          className={styles.customModal}
-          title={this.state.modal.title + ' Download'}
-          buttonText="Download"
-          isOpen={this.state.modal.show}
-          onClose={this.downloadVideo}
-        >
-          <Row>
-            <Col>
-              <img src={this.state.modal.image} />
-            </Col>
-            <Col>
-              <small>{this.state.modal.album}</small>
-            </Col>
-          </Row>
-        </Modal>
       </Page>
     );
   }
