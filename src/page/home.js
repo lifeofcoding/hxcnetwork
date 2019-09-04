@@ -59,6 +59,8 @@ export class Home extends React.Component {
     };
 
     this.timer = null;
+    this.download = this.download.bind(this);
+    this.downloadVideo = this.downloadVideo.bind(this);
     this.getResults = this.getResults.bind(this);
 
     this.el = null;
@@ -114,13 +116,42 @@ export class Home extends React.Component {
     this.getResults(params.terms || 'indie');
   }
 
+  download(result) {
+    this.setState({
+      modal: {
+        show: true,
+        title: result.artist + ' - ' + result.title,
+        videoId: result.youtubeId,
+        image: result.coverUrl,
+        album: result.album,
+      },
+    });
+  }
+
   createTable() {
     let table = [];
 
     for (let i = 0, len = this.state.results.length; i < len; i++) {
-      table.push(<Result key={i} result={this.state.results[i]} />);
+      table.push(
+        <Result
+          key={i}
+          download={this.download}
+          result={this.state.results[i]}
+        />
+      );
     }
     return table;
+  }
+
+  downloadVideo() {
+    var url = `/api/download/${this.state.modal.videoId}`;
+    this.setState({
+      modal: {
+        show: false,
+      },
+    });
+
+    document.location.href = url;
   }
 
   render() {
@@ -130,6 +161,27 @@ export class Home extends React.Component {
           <ArtistInfo history={this.props.history} />
           {this.createTable()}
         </Panel>
+
+        <Modal
+          type="info"
+          className={styles.customModal}
+          title={this.state.modal.title + ' Download'}
+          buttonText="Download"
+          isOpen={this.state.modal.show}
+          onClose={this.downloadVideo}
+        >
+          <Row>
+            <Col>
+              <img
+                src={this.state.modal.image}
+                style={{width: '100%', height: 'auto'}}
+              />
+            </Col>
+            <Col>
+              <small>{this.state.modal.album}</small>
+            </Col>
+          </Row>
+        </Modal>
       </Page>
     );
   }

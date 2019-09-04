@@ -32,8 +32,6 @@ export class Result extends React.Component {
     };
 
     this.timer = null;
-    this.downloadVideo = this.downloadVideo.bind(this);
-
     this.el = null;
   }
   componentDidMount() {
@@ -44,29 +42,6 @@ export class Result extends React.Component {
       // when it finishes loading, update the component state
       this.setState({imageIsReady: true});
     };
-  }
-
-  download(result) {
-    this.setState({
-      modal: {
-        show: true,
-        title: result.artist + ' - ' + result.title,
-        videoId: result.youtubeId,
-        image: result.coverUrl,
-        album: result.album,
-      },
-    });
-  }
-
-  downloadVideo() {
-    var url = `/api/download/${this.state.modal.videoId}`;
-    this.setState({
-      modal: {
-        show: false,
-      },
-    });
-
-    document.location.href = url;
   }
 
   play(e, result) {
@@ -81,6 +56,7 @@ export class Result extends React.Component {
 
   render() {
     const {imageIsReady} = this.state;
+    const download = this.props.download;
 
     let style = {
       background: 'url(' + this.props.result.coverUrl + ')',
@@ -126,30 +102,12 @@ export class Result extends React.Component {
               <Button
                 type="info"
                 icon={<i className="fa fa-download" />}
-                onClick={e => this.download(this.props.result)}
+                onClick={e => download(this.props.result)}
                 title="Download"
                 size="sm"
               />
             </td>
           </TableRow>
-
-          <Modal
-            type="info"
-            className={styles.customModal}
-            title={this.state.modal.title + ' Download'}
-            buttonText="Download"
-            isOpen={this.state.modal.show}
-            onClose={this.downloadVideo}
-          >
-            <Row>
-              <Col>
-                <img src={this.state.modal.image} />
-              </Col>
-              <Col>
-                <small>{this.state.modal.album}</small>
-              </Col>
-            </Row>
-          </Modal>
         </TableBody>
       </Table>
     );

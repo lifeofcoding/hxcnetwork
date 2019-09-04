@@ -121,6 +121,23 @@ client.connect(function(err) {
   });
 
   router.get('/download/:videoId', function(req, res) {
+    axios
+      .get(`https://jewtube.herokuapp.com/get/${req.params.videoId}`)
+      .then(ress => {
+        let vid = ress.data.items[0];
+        res.setHeader(
+          'content-disposition',
+          'attachment; filename=' +
+            _.replace(vid.snippet.title, ' ', '_') +
+            '.mp3'
+        );
+        request(`https://jewtube.herokuapp.com/${req.params.videoId}`).pipe(
+          res
+        );
+      });
+  });
+
+  router.get('/stream/:videoId', function(req, res) {
     request(`https://jewtube.herokuapp.com/${req.params.videoId}`).pipe(res);
   });
 
