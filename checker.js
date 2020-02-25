@@ -10,9 +10,9 @@ const geoip = require('geoip-lite');
 
 const MongoClient = require('mongodb').MongoClient;
 
-const dbName = 'heroku_3xj7kmcz';
+const dbName = 'proxies';
 
-const client = new MongoClient(`mongodb://jimmy:rousseau1@ds145456.mlab.com:45456/heroku_3xj7kmcz`, {useNewUrlParser: true});
+const client = new MongoClient(`mongodb://proxies:scandal1@ds221095.mlab.com:21095/proxies`, {useNewUrlParser: true});
 
 var scraped = [];
 var proxyCount = 0;
@@ -108,7 +108,7 @@ client.connect(function(err) {
                                collection.insertOne(results.proxy, {unique : true, dropDups : true}, function(err, res) {
                                //collection.insertOne(results.proxy, function(err, res) {
                 					if (err) return console.error(err);
-                                 console.log(`Added ${results.proxy.type}://${results.proxy.address}:${results.proxy.port} to database`);
+                                 console.log(`Added ${results.proxy.type}://${results.proxy.address}:${results.proxy.port} located in ${results.proxy.city} ${results.proxy.country} to database`);
                     			  });
                             } catch (e) {
                                console.warn(e);

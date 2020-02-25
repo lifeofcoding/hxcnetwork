@@ -162,7 +162,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 const dbName = 'heroku_3xj7kmcz';
 
-const client = new MongoClient(`mongodb://jimmy:rousseau1@ds145456.mlab.com:45456/heroku_3xj7kmcz`);
+const client = new MongoClient(`mongodb://proxies:scandal1@ds221095.mlab.com:21095/proxies`);
 
 client.connect(function(err) {
 		if (err) {
