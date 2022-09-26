@@ -39,7 +39,7 @@
     "mongodb": "^3.2.3",
     "node-spotify-api": "^1.1.1",
     "pingmydyno": "^1.5.1",
-    "proxy-verifier": "^0.4.0",
+    "proxy-verifier": "^0.4.4",
     "react": "^0.14.8",
     "react-autosuggest": "^3.7.4",
     "react-blur-admin": "^0.10.0",
